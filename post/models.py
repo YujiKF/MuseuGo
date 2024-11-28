@@ -15,6 +15,8 @@ class Post(models.Model):
     content = models.TextField()
     created_date = models.DateTimeField(default=now)
     categories = models.ManyToManyField(Category, related_name='posts')
+    location = models.TextField()
+    image_url = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -24,13 +26,3 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()  
     created_date = models.DateTimeField(default=now)
-
-class Museum(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    created_date = models.DateTimeField(default=now)
-    categories = models.ManyToManyField('Category', related_name='museums')
-    image_url = models.CharField(max_length=255, blank=True, null=True)  # Campo para armazenar a URL ou caminho da imagem
-
-    def __str__(self):
-        return self.title

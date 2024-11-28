@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <!-- Exibe o título do museu -->
-    <h2>{{ museum.title }}</h2> <br>
+    <h2>{{ post.title }}</h2> 
     
-    <!-- Exibe a descrição do museu -->
-    <p><strong>Descrição:</strong> {{ museum.content|safe }}</p>
-    
-    <!-- Exibe o local do museu -->
-    <p><strong>Local:</strong> {{ museum.location }}</p> <!-- Supondo que o modelo tenha um campo 'location' -->
+    <p><strong>Local:</strong> {{ post.location }}</p> 
+    <br>
+    <p><strong>Descrição:</strong> {{ post.content|safe }}</p>
 
     <br><br>
     <h3>Comentários</h3>
     <ul>
-        {% for comment in museum.comments.all|dictsortreversed:"created_date" %}
+        {% for comment in post.comments.all|dictsortreversed:"created_date" %}
             <li>
                 <strong>{{ comment.author }}:</strong>
                 {{ comment.content }} <em>{{ comment.created_date|date:"d M Y H:i" }}</em>
@@ -24,13 +21,11 @@
     </ul>
     <br>
 
-    <!-- Links para editar ou excluir o museu -->
-    <a href="{% url 'museum_edit' museum.pk %}" class="btn">Editar</a>
-    <a href="{% url 'museum_delete' museum.pk %}" class="btn">Excluir</a> 
+    <a href="{% url 'post_edit' post.pk %}" class="btn">Editar</a>
+    <a href="{% url 'post_delete' post.pk %}" class="btn">Excluir</a> 
 
     {% if user.is_authenticated %}
-        <!-- Formulário para adicionar um comentário -->
-        <form method="post" action="{% url 'add_comment' museum.id %}">
+        <form method="post" action="{% url 'add_comment' post.id %}">
             {% csrf_token %}
             {{ form.as_p }}
             <br>

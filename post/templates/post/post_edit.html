@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Editar Post</h1>
+  <h1>Editar Museu</h1>
   <br>
   <form method="post">
     {% csrf_token %}
-    <label for="title">Título:</label>
+    <label for="title">Nome do museu:</label>
     <input type="text" name="title" id="title" value="{{ post.title }}" required><br><br>
-    <label for="content">Conteúdo:</label><br> 
+    <label for="title">Local:</label>
+    <input type="text" name="location" id="location" value="{{ post.location }}" required><br><br>
+    <label for="content">Descrição do museu:</label><br> 
     <textarea name="content" id="content" required>{{ post.content }}</textarea><br>
     <button type="submit" class="btn">Salvar</button>
     <a href="{% url 'post_detail' post.pk %}" class="btn">Cancelar</a>

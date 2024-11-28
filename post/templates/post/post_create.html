@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Novo Post</h1>
+  <h1>Adicionar museu</h1>
   <br>
   <form method="post">
     {% csrf_token %}
     <label for="title">Título:</label>
     <input type="text" name="title" id="title" required><br>
-    <br>
+    <label for="location">Local:</label>
+    <input type="text" name="location" id="location" required><br>
     <label for="content">Conteúdo:</label> <br>
     <textarea name="content" id="content" required></textarea> <br>
     <button type="submit" class="btn">Salvar</button>

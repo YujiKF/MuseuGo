@@ -4,35 +4,34 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from .forms import PostForm, CommentForm
-from .models import Museum
 
-# Listar todos os posts
+# Listar todos os museus
 class PostListView(ListView):
     model = Post
     template_name = 'post/post_list.html'
     context_object_name = 'posts'  
 
-# Detalhes de um único post
+# Detalhes de um único museus
 class PostDetailView(DetailView):
     model = Post
     template_name = 'post/post_detail.html'
     context_object_name = 'post'  
 
-# Criar um novo post
+# Criar um novo museus
 class PostCreateView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'post/post_create.html'
     success_url = reverse_lazy('post_list')  
 
-# Editar um post existente
+# Editar um museu existente
 class PostUpdateView(UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'post/post_edit.html'
     success_url = reverse_lazy('post_list')
 
-# Excluir um post
+# Excluir um museu
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'post/post_confirm_delete.html'
@@ -53,13 +52,13 @@ def add_comment(request, pk):
         form = CommentForm()
     return render(request, 'post/add_comment.html', {'form': form, 'post': post})
 
-# Listagem de todas as categorias
+# Listagem de todos eventos
 class CategoryListView(ListView):
     model = Category
     template_name = 'post/category_list.html'
     context_object_name = 'categories'
 
-# Detalhes de uma categoria com posts
+# Detalhes de um evento
 class CategoryDetailView(DetailView):
     model = Category
     template_name = 'post/category_detail.html'
@@ -67,22 +66,17 @@ class CategoryDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = self.object.posts.all()  # Recupera todos os posts da categoria
+        context['posts'] = self.object.posts.all()  
         return context
 
-    def museum_list(request):
-        museums = Museum.objects.all()  # Recupera todos os museus
-        return render(request, 'museum_list.html', {'museums': museums})
-
-from django.shortcuts import render
-from .models import Museum, Category
+    def post_list(request):
+        museums = Post.objects.all()  
+        return render(request, 'post_list.html', {'posts': museums})
 
 def home(request):
-    # Recuperar dados necessários para a página inicial
-    museums = Museum.objects.all()[:3]  # Limita a exibição de 3 museus (ou ajuste conforme necessário)
-    event_categories = Category.objects.all()  # Categorias associadas aos eventos
+    posts = Post.objects.all()  
     context = {
-        'museums': museums,
-        'event_categories': event_categories,
+        'posts': posts,  
     }
     return render(request, 'staticpages/home.html', context)
+
