@@ -1,0 +1,12 @@
+{% load static %}
+<header>
+    <img src="{% static 'images/museu.png' %}" alt="logo" width="150" height="auto">
+    <h1>{% block site_title %}MuseuGo{% endblock %}</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Início</a></li>
+            <li><a href="{% url 'post_list' %}">Museus</a></li>
+            <li><a href="{% url 'category_list' %}">Eventos</a></li>
+        </ul>
+    </nav>
+</header>

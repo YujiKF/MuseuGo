@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1> Adicionar novo comentário </h1> <br>
+    <form method="post">
+    {% csrf_token %}
+    <label for="content">Escreva seu comentário:</label> <br>
+    <textarea name="content" id="content" required></textarea> <br>
+    <button type="submit" class="btn">Salvar</button> |
+    <a href="{% url 'post_list' %}" class="btn">Voltar à lista</a>
+  </form>
+{% endblock %}

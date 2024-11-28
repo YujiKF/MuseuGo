@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Exibe o título do museu -->
+    <h2>{{ museum.title }}</h2> <br>
+    
+    <!-- Exibe a descrição do museu -->
+    <p><strong>Descrição:</strong> {{ museum.content|safe }}</p>
+    
+    <!-- Exibe o local do museu -->
+    <p><strong>Local:</strong> {{ museum.location }}</p> <!-- Supondo que o modelo tenha um campo 'location' -->
+
+    <br><br>
+    <h3>Comentários</h3>
+    <ul>
+        {% for comment in museum.comments.all|dictsortreversed:"created_date" %}
+            <li>
+                <strong>{{ comment.author }}:</strong>
+                {{ comment.content }} <em>{{ comment.created_date|date:"d M Y H:i" }}</em>
+            </li>
+        {% empty %}
+            <br><li>Sem comentários ainda.</li>
+        {% endfor %}
+    </ul>
+    <br>
+
+    <!-- Links para editar ou excluir o museu -->
+    <a href="{% url 'museum_edit' museum.pk %}" class="btn">Editar</a>
+    <a href="{% url 'museum_delete' museum.pk %}" class="btn">Excluir</a> 
+
+    {% if user.is_authenticated %}
+        <!-- Formulário para adicionar um comentário -->
+        <form method="post" action="{% url 'add_comment' museum.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <a href="{% url 'museum_list' %}" class="btn">Ver museus</a> |
+            <button type="submit" class="btn">Adicionar Comentário</button>
+        </form>
+    {% else %}
+        <p><h3>Faça login para adicionar comentários.</h3></p>
+    {% endif %}
+{% endblock %}

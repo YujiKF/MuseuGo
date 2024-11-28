@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Página Inicial - Museus e Eventos
+{% endblock %}
+
+{% block content %}
+  <h1>Visite um museu ou participe de um evento!</h1>
+  <p>Descubra eventos e museus incríveis para explorar.</p>
+  
+  <!-- Evento destaque -->
+  <section class="event">
+    <img src="{% static 'images/museu.png' %}" alt="Imagem do Evento">
+    <div class="event-details">
+      <h2>Evento A</h2>
+      <p><strong>Museus:</strong> Museu 1, Museu 2.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit.</p>
+      <a href="#" class="btn">Acessar evento</a>
+    </div>
+  </section>
+  
+  <!-- Lista de museus -->
+  <section class="museums">
+    <h3>Museus</h3>
+    <div class="museum">
+      <img src="{% static 'images/valorant.png' %}" alt="Museu 1">
+      <div>
+        <h4>Museu 1</h4>
+        <p>Description duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        <a href="#" class="btn">Ver detalhes</a>
+      </div>
+    </div>
+    <div class="museum">
+      <img src="{% static 'images/valorant.png' %}" alt="Museu 2">
+      <div>
+        <h4>Museu 2</h4>
+        <p>Description duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        <a href="#" class="btn">Ver detalhes</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

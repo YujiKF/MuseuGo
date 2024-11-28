@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Excluir Post</h1>
+  <br>
+  <p>Tem certeza de que deseja excluir o post "{{ post.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">Confirmar</button>
+  </form>
+  <a href="{% url 'post_detail' post.pk %}" class="btn">Cancelar</a>
+{% endblock %}

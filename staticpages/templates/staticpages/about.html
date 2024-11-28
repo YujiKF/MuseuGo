@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    About
+{% endblock %}
+
+{% block content %}
+    <h1>Sobre o site</h1>
+    <br>
+    <p>Este blog serve para postar meus projetos e que outras pessoas possam compartilhar os seus.</p>
+    <br>
+    <a href="{% url 'home' %}" class="btn">Voltar ao ínicio</a> |
+    <a href="{% url 'post_list' %}" class="btn">Ver posts</a>
+{% endblock %}
