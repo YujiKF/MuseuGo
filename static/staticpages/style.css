@@ -77,13 +77,14 @@ aside {
 
 .event, .museum {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column; 
+  align-items: flex-start; 
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
   border: 1px solid #D2691E;
+  gap: 10px; 
 }
 
 .event img, .museum img {
@@ -128,8 +129,9 @@ a.post-title:hover {
   text-decoration: underline; 
 }
 
-title {
+.title {
   color: white;
+  font-size: 46px;
 }
 
 a.post-content {
@@ -137,6 +139,15 @@ a.post-content {
   text-decoration: none; 
   font-weight: bold; 
 }
+
+.museum img {
+  width: 200px; 
+  height: auto; 
+  border-radius: 5px;
+  margin-bottom: 10px;
+  object-fit: cover; 
+}
+
 
 @media (max-width: 768px) {
   .section {

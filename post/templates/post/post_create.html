@@ -7,10 +7,16 @@
     {% csrf_token %}
     <label for="title">Título:</label>
     <input type="text" name="title" id="title" required><br>
+    
     <label for="location">Local:</label>
     <input type="text" name="location" id="location" required><br>
-    <label for="content">Conteúdo:</label> <br>
+
+    <label for="content">Descrição:</label> <br>
     <textarea name="content" id="content" required></textarea> <br>
+
+    <label for="image">Link imagem:</label> <br>
+    <textarea name="image" id="image_url" required></textarea> <br>
+    
     <button type="submit" class="btn">Salvar</button>
   </form>
   <a href="{% url 'post_list' %}" class="btn">Voltar à lista</a>

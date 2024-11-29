@@ -8,29 +8,36 @@
 {% block content %}
   <h1>Visite um museu ou participe de um evento!</h1>
   <p>Descubra eventos e museus incríveis para explorar.</p>
-  
-  <section class="event">
-    <img src="{% static 'images/museu.png' %}" alt="Imagem do Evento">
-    <div class="event-details">
-      <h2>Evento A</h2>
-      <p><strong>Museus:</strong> Museu 1, Museu 2.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit.</p>
-      <a href="#" class="btn">Acessar evento</a>
+  <br>
+
+  <h3>Eventos</h3>
+  <section class="events">
+    <div class="event-list">
+      {% for category in categories %}
+        <div class="event">
+          <a href="{% url 'category_detail' category.pk %}" class="post-title">{{ category.name }}</a>
+          <p class="category-content">{{ category.description|truncatewords:20 }}</p>
+          <img src="{% static 'images/valorant.png' %}" alt="Imagem do evento" class="event-image"> 
+          <a href="{% url 'category_detail' category.pk %}" class="btn">Conhecer</a>
+        </div>
+      {% empty %}
+        <p>Não há eventos disponíveis no momento.</p>
+      {% endfor %}
     </div>
   </section>
   
   <section class="museums">
     <h3>Museus</h3>
-    <!-- Exibe os posts -->
     <div class="museum-list">
       {% for post in posts %}
         <div class="museum">
           <a href="{% url 'post_detail' post.pk %}" class="post-title">{{ post.title }}</a>
           <p class="post-content">{{ post.content|truncatewords:20 }}</p>
-          <a href="{% url 'post_detail' post.pk %}" class="btn">Leia mais</a>
+          <img src="{% static 'images/ipiranga.jpg' %}" alt="Imagem do museu" class="museum-image"> 
+          <a href="{% url 'post_detail' post.pk %}" class="btn">Conhecer</a>
         </div>
       {% empty %}
-        <p>Não há posts disponíveis no momento.</p>
+        <p>Não há museus disponíveis no momento.</p>
       {% endfor %}
     </div>
   </section>

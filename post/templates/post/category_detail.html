@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Eventos: {{ category.name }}</h2> 
+<h2>{{ category.name }}</h2>
 <p>{{ category.description }}</p> <br>
-<h3>Museus neste categoria:</h3> <br>
-<ul>
+<h3>Museus participando evento:</h3> <br>
     {% for post in posts %}
         <li><a href="{% url 'post_detail' post.pk %}" class="post-title">{{ post.title }}</a></li>
     {% endfor %}
-</ul>
 {% endblock %}

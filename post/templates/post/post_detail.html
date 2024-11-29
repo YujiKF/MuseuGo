@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
+{%load static%}
 
 {% block content %}
     <h2>{{ post.title }}</h2> 
     
     <p><strong>Local:</strong> {{ post.location }}</p> 
+    <br>
+    <img src="{% static 'images/ipiranga.jpg' %}" alt="logo" width="auto" height="auto">
     <br>
     <p><strong>Descrição:</strong> {{ post.content|safe }}</p>
 
@@ -29,7 +32,6 @@
             {% csrf_token %}
             {{ form.as_p }}
             <br>
-            <a href="{% url 'museum_list' %}" class="btn">Ver museus</a> |
             <button type="submit" class="btn">Adicionar Comentário</button>
         </form>
     {% else %}

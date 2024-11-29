@@ -2,9 +2,11 @@
 
 {% block content %}
 <h1>Eventos</h1>
-<ul>
+    <br>
     {% for category in categories %}
-        <li><a href="{% url 'category_detail' category.pk %}" class="post-title">{{ category.name }}</a></li>
+    <li>
+        <a href="{% url 'category_detail' category.pk %}" class="post-title">{{ category.name }}</a>
+        <p class="category-content">{{ category.description|truncatewords:20 }}</p>
+    </li>
     {% endfor %}
-</ul>
 {% endblock %}
