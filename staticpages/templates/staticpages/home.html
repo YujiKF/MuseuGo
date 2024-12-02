@@ -6,6 +6,20 @@
 {% endblock %}
 
 {% block content %}
+
+<nav>
+  {% if user.is_authenticated %}
+    <p>Olá, {{ user.username }}!</p>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn">Logout</button>
+    </form>
+  {% else %}
+    <p>Olá, Visitante!</p>
+    <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+</nav>
+
   <h1>Visite um museu ou participe de um evento!</h1>
   <p>Descubra eventos e museus incríveis para explorar.</p>
   <br>

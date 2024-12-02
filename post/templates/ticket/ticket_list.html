@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Ingressos Disponíveis</h1>
+<table>
+    <tr>
+        <th>Evento</th>
+        <th>Museu</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+        <th>Ação</th>
+    </tr>
+    {% for ticket in tickets %}
+    <tr>
+        <td>{{ ticket.event_name }}</td>
+        <td>{{ ticket.museum.title }}</td>
+        <td>R$ {{ ticket.price }}</td>
+        <td>{{ ticket.available_quantity }}</td>
+        <td>
+            <a href="{% url 'add_to_cart' ticket.id %}">Adicionar ao Carrinho</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
