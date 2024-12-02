@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import ticket_list, add_to_cart, cart_view
 from .views import (
     PostListView,
     PostDetailView,
@@ -19,4 +20,7 @@ urlpatterns = [
     path('<int:pk>/add_comment/', add_comment, name='add_comment'),
     path('categories/', CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category_detail'),
+    path('tickets/', ticket_list, name='ticket_list'),
+    path('tickets/add_to_cart/<int:ticket_id>/', add_to_cart, name='add_to_cart'),
+    path('cart/', cart_view, name='cart_view'),
 ]

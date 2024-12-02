@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+class Ticket(models.Model):
+    event_name = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    available_quantity = models.PositiveIntegerField(default=0)
+    museum = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='ticket')
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)

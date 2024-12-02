@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
+from .models import Post, Category, Ticket
 from .forms import PostForm, CommentForm
 
 # Listar todos os museus
@@ -12,17 +13,19 @@ class PostListView(ListView):
     context_object_name = 'posts'  
 
 # Detalhes de um único museus
-class PostDetailView(DetailView):
+class PostDetailView(PermissionRequiredMixin, DetailView):
     model = Post
     template_name = 'post/post_detail.html'
-    context_object_name = 'post'  
+    context_object_name = 'post'
+    permission_required = 'post.view_post' 
 
 # Criar um novo museus
-class PostCreateView(CreateView):
+class PostCreateView(PermissionRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'post/post_create.html'
-    success_url = reverse_lazy('post_list')  
+    success_url = reverse_lazy('post_list')
+    permission_required = 'post.add_post' 
 
 # Editar um museu existente
 class PostUpdateView(UpdateView):
@@ -79,4 +82,32 @@ def home(request):
         'posts': posts,  
     }
     return render(request, 'staticpages/home.html', context)
+
+def ticket_list(request):
+    tickets = Ticket.objects.filter(available_quantity__gt=0)
+    return render(request, 'ticket/ticket_list.html', {'tickets': tickets})
+
+def add_to_cart(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    cart = request.session.get('cart', {})
+    if str(ticket_id) in cart:
+        cart[str(ticket_id)] += 1
+    else:
+        cart[str(ticket_id)] = 1
+    request.session['cart'] = cart
+    return redirect('ticket_list')
+
+def cart_view(request):
+    cart = request.session.get('cart', {})
+    tickets = Ticket.objects.filter(id__in=cart.keys())
+    cart_items = [
+        {
+            'ticket': ticket,
+            'quantity': cart[str(ticket.id)],
+            'total': ticket.price * cart[str(ticket.id)],
+        }
+        for ticket in tickets
+    ]
+    total_price = sum(item['total'] for item in cart_items)
+    return render(request, 'ticket/cart.html', {'cart_items': cart_items, 'total_price': total_price})
 

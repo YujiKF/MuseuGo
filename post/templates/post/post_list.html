@@ -3,13 +3,17 @@
 {% block content %}
   <h1>Museus</h1>
   <br>
+  <ul>
     {% for post in posts %}
       <li>
         <a href="{% url 'post_detail' post.pk %}" class="post-title">{{ post.title }}</a> 
         <br>
-        <a href="{% url 'post_detail' post.pk %}" class="post-content">{{ post.content }}</a> 
+        <span class="post-content">{{ post.content }}</span> 
       </li>
     {% endfor %}
+  </ul>
   <br>
-  <a href="{% url 'post_create' %}" class="btn">Adicionar museu</a> 
+  {% if perms.post.add_post %}
+    <a href="{% url 'post_create' %}" class="btn">Adicionar museu</a> 
+  {% endif %}
 {% endblock %}
