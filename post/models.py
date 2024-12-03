@@ -6,7 +6,10 @@ class Ticket(models.Model):
     event_name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available_quantity = models.PositiveIntegerField(default=0)
-    museum = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='ticket')
+    museums = models.ManyToManyField('Post', related_name='tickets') 
+
+    def __str__(self):
+        return self.event_name
 
 
 class Category(models.Model):

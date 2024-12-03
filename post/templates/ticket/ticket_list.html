@@ -2,24 +2,32 @@
 
 {% block content %}
 <h1>Ingressos Disponíveis</h1>
-<table>
-    <tr>
-        <th>Evento</th>
-        <th>Museu</th>
-        <th>Preço</th>
-        <th>Quantidade</th>
-        <th>Ação</th>
-    </tr>
-    {% for ticket in tickets %}
-    <tr>
-        <td>{{ ticket.event_name }}</td>
-        <td>{{ ticket.museum.title }}</td>
-        <td>R$ {{ ticket.price }}</td>
-        <td>{{ ticket.available_quantity }}</td>
-        <td>
-            <a href="{% url 'add_to_cart' ticket.id %}">Adicionar ao Carrinho</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+{% for ticket in tickets %}
+    <div style="margin-bottom: 20px;">
+        <strong>Evento:</strong>
+        <div>{{ ticket.event_name }}</div>
+        
+        <strong>Museu:</strong>
+        <div>
+            {% for museum in ticket.museums.all %}
+                {{ museum.title }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+        
+        <strong>Preço:</strong>
+        <div>R$ {{ ticket.price }}</div>
+        
+        <strong>Quantidade:</strong>
+        <div>{{ ticket.available_quantity }}</div>
+        
+        
+        <div>
+            <a href="{% url 'add_to_cart' ticket.id %}" class="post-title">Adicionar ao Carrinho </a>
+            <br><a href="{% url 'remove_to_cart' ticket.id %}" class="post-title">Remover do Carrinho </a>
+
+        </div>
+    </div>
+{% empty %}
+    <p>Nenhum ingresso disponível.</p>
+{% endfor %}
 {% endblock %}

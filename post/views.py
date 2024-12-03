@@ -97,6 +97,16 @@ def add_to_cart(request, ticket_id):
     request.session['cart'] = cart
     return redirect('ticket_list')
 
+def remove_to_cart(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    cart = request.session.get('cart', {})
+    if str(ticket_id) in cart:
+        cart[str(ticket_id)] -= 1
+    else:
+        cart[str(ticket_id)] = 1
+    request.session['cart'] = cart
+    return redirect('ticket_list')
+
 def cart_view(request):
     cart = request.session.get('cart', {})
     tickets = Ticket.objects.filter(id__in=cart.keys())

@@ -2,21 +2,21 @@
 
 {% block content %}
 <h1>Carrinho de Compras</h1>
-<table>
-    <tr>
-        <th>Evento</th>
-        <th>Preço Unitário</th>
-        <th>Quantidade</th>
-        <th>Total</th>
-    </tr>
-    {% for item in cart_items %}
-    <tr>
-        <td>{{ item.ticket.event_name }}</td>
-        <td>R$ {{ item.ticket.price }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>R$ {{ item.total }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% for item in cart_items %}
+    <div style="margin-bottom: 20px;">
+        <strong>Evento:</strong>
+        <div>{{ item.ticket.event_name }}</div>
+        
+        <strong>Preço Unitário:</strong>
+        <div>R$ {{ item.ticket.price }}</div>
+        
+        <strong>Quantidade:</strong>
+        <div>{{ item.quantity }}</div>
+        
+    </div>
+{% empty %}
+    <p>Seu carrinho está vazio.</p>
+{% endfor %}
+
 <h2>Total: R$ {{ total_price }}</h2>
 {% endblock %}
