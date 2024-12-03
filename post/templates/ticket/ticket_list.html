@@ -1,27 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Ingressos Disponíveis</h1>
+<h1>Eventos Disponíveis</h1>
 {% for ticket in tickets %}
     <div style="margin-bottom: 20px;">
-        <strong>Evento:</strong>
+        <br><strong>Evento:</strong>
         <div>{{ ticket.event_name }}</div>
         
-        <strong>Museu:</strong>
+        <br><strong>Museu:</strong>
         <div>
             {% for museum in ticket.museums.all %}
                 {{ museum.title }}{% if not forloop.last %}, {% endif %}
             {% endfor %}
         </div>
         
-        <strong>Preço:</strong>
+        <br><strong>Preço:</strong>
         <div>R$ {{ ticket.price }}</div>
         
-        <strong>Quantidade:</strong>
-        <div>{{ ticket.available_quantity }}</div>
         
         
-        <div>
+        <br><div>
             <a href="{% url 'add_to_cart' ticket.id %}" class="post-title">Adicionar ao Carrinho </a>
             <br><a href="{% url 'remove_to_cart' ticket.id %}" class="post-title">Remover do Carrinho </a>
 

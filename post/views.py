@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category, Ticket
@@ -13,6 +14,7 @@ class PostListView(ListView):
     context_object_name = 'posts'  
 
 # Detalhes de um único museus
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class PostDetailView(PermissionRequiredMixin, DetailView):
     model = Post
     template_name = 'post/post_detail.html'
@@ -40,7 +42,7 @@ class PostDeleteView(DeleteView):
     template_name = 'post/post_confirm_delete.html'
     success_url = reverse_lazy('post_list')  
 
-@login_required
+@login_required(login_url='login')
 def add_comment(request, pk): 
     post = get_object_or_404(Post, id=pk)
     if request.method == "POST":
@@ -83,10 +85,12 @@ def home(request):
     }
     return render(request, 'staticpages/home.html', context)
 
+@login_required(login_url='login')
 def ticket_list(request):
     tickets = Ticket.objects.filter(available_quantity__gt=0)
     return render(request, 'ticket/ticket_list.html', {'tickets': tickets})
 
+@login_required(login_url='login')
 def add_to_cart(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     cart = request.session.get('cart', {})
@@ -97,6 +101,7 @@ def add_to_cart(request, ticket_id):
     request.session['cart'] = cart
     return redirect('ticket_list')
 
+@login_required(login_url='login')
 def remove_to_cart(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     cart = request.session.get('cart', {})
@@ -107,6 +112,7 @@ def remove_to_cart(request, ticket_id):
     request.session['cart'] = cart
     return redirect('ticket_list')
 
+@login_required(login_url='login')
 def cart_view(request):
     cart = request.session.get('cart', {})
     tickets = Ticket.objects.filter(id__in=cart.keys())
