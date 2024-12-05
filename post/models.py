@@ -1,5 +1,7 @@
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.timezone import now
 
 class Ticket(models.Model):
@@ -35,3 +37,15 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()  
     created_date = models.DateTimeField(default=now)
+
+class UserRegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    password1 = forms.CharField(
+        label="Senha",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}),
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1']

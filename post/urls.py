@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from .views import register
 from .views import ticket_list, add_to_cart, cart_view, remove_to_cart
 from .views import (
     PostListView,
@@ -24,4 +26,8 @@ urlpatterns = [
     path('tickets/add_to_cart/<int:ticket_id>/', add_to_cart, name='add_to_cart'),
     path('tickets/remove_to_cart/<int:ticket_id>/', remove_to_cart, name='remove_to_cart'),
     path('cart/', cart_view, name='cart_view'),
+    path('register/', register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
 ]

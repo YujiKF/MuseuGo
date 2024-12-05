@@ -6,6 +6,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category, Ticket
 from .forms import PostForm, CommentForm
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import UserRegistrationForm
 
 # Listar todos os museus
 class PostListView(ListView):
@@ -79,9 +82,17 @@ class CategoryDetailView(DetailView):
         return render(request, 'post_list.html', {'posts': museums})
 
 def home(request):
-    posts = Post.objects.all()  
+    form = UserRegistrationForm()
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Cadastro realizado com sucesso! Faça login para continuar.")
+            return redirect('login')
+    posts = Post.objects.all()
     context = {
-        'posts': posts,  
+        'form': form,
+        'posts': posts,
     }
     return render(request, 'staticpages/home.html', context)
 
@@ -127,3 +138,17 @@ def cart_view(request):
     total_price = sum(item['total'] for item in cart_items)
     return render(request, 'ticket/cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
+def register(request):
+    if request.method == 'POST':
+        print("Dados recebidos no POST:", request.POST)  
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Conta criada com sucesso! Faça login para continuar.")
+            return redirect('login')
+        else:
+            print("Erros no formulário:", form.errors) 
+            messages.error(request, "Erro ao criar a conta. Verifique os dados.")
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
